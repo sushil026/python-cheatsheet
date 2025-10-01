@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python DSA Cheatsheet - Dark Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --border: #30363d;
+            --code-bg: #161b22;
+            --green: #3fb950;
+            --purple: #bc8cff;
+            --yellow: #d29922;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h1::before {
+            content: "🐍";
+            font-size: 3rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--bg-tertiary);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 30px 0;
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h3 {
+            color: var(--purple);
+            font-size: 1.3rem;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: var(--green);
+            font-size: 1.1rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--accent);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-primary);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        .toc {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            padding: 8px 0;
+        }
+
+        .toc a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .note {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .note strong {
+            color: var(--accent);
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .complexity {
+            background: var(--bg-tertiary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: var(--bg-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            background: var(--accent-hover);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            pre {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python DSA Quick Reference Cheatsheet</h1>
+        <p class="subtitle">A comprehensive guide to Python data structures and algorithms for technical interviews</p>
+        
+        <div class="badges">
+            <span class="badge">🐍 Python 3.x</span>
+            <span class="badge">⚡ Interview Ready</span>
+            <span class="badge">📚 Complete Reference</span>
+        </div>
+
+        <hr>
+
+        <div class="toc">
+            <h2>📚 Table of Contents</h2>
+            <ul>
+                <li><a href="#lists">1. Lists (Dynamic Arrays)</a></li>
+                <li><a href="#strings">2. Strings</a></li>
+                <li><a href="#tuples">3. Tuples</a></li>
+                <li><a href="#sets">4. Sets</a></li>
+                <li><a href="#dicts">5. Dictionaries</a></li>
+                <li><a href="#deque">6. Deque</a></li>
+                <li><a href="#heap">7. Heap</a></li>
+                <li><a href="#counter">8. Counter</a></li>
+                <li><a href="#defaultdict">9. DefaultDict</a></li>
+                <li><a href="#stack">10. Stack</a></li>
+                <li><a href="#queue">11. Queue</a></li>
+                <li><a href="#ordereddict">12. OrderedDict</a></li>
+                <li><a href="#sorting">13. Sorting</a></li>
+                <li><a href="#binarysearch">14. Binary Search</a></li>
+                <li><a href="#itertools">15. Itertools</a></li>
+                <li><a href="#math">16. Math Operations</a></li>
+                <li><a href="#builtins">17. Built-in Functions</a></li>
+                <li><a href="#twopointers">18. Two Pointers</a></li>
+                <li><a href="#slidingwindow">19. Sliding Window</a></li>
+                <li><a href="#snippets">20. Code Snippets</a></li>
+                <li><a href="#complexity">21. Time Complexity</a></li>
+            </ul>
+        </div>
+
+        <h2 id="lists">1. Lists (Dynamic Arrays)</h2>
+        
+        <h3>Creation & Basic Operations</h3>
+        <pre><code>arr = []                    # Empty list
+arr = [1, 2, 3]            # Initialized list
+arr = [0] * n              # List with n zeros
+arr = list(range(5))       # [0, 1, 2, 3, 4]</code></pre>
+
+        <h3>Common Methods</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Time Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>arr.append(x)</code></td>
+                    <td>Add to end</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.pop()</code></td>
+                    <td>Remove from end</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.pop(i)</code></td>
+                    <td>Remove at index i</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.insert(i, x)</code></td>
+                    <td>Insert x at index i</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.remove(x)</code></td>
+                    <td>Remove first occurrence</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.reverse()</code></td>
+                    <td>Reverse in-place</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><code>arr.sort()</code></td>
+                    <td>Sort ascending</td>
+                    <td>O(n log n)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>List Comprehension</h3>
+        <pre><code>squares = [x**2 for x in range(10)]
+evens = [x for x in arr if x % 2 == 0]
+matrix = [[0]*m for _ in range(n)]  # n x m matrix</code></pre>
+
+        <h3>Slicing</h3>
+        <pre><code>arr[start:end]             # Elements from start to end-1
+arr[start:]                # From start to end
+arr[:end]                  # From beginning to end-1
+arr[::step]                # Every step element
+arr[::-1]                  # Reverse list
+arr[:]                     # Shallow copy</code></pre>
+
+        <h2 id="strings">2. Strings</h2>
+        
+        <h3>Common Methods</h3>
+        <pre><code>s.upper()                  # "HELLO"
+s.lower()                  # "hello"
+s.strip()                  # Remove whitespace
+s.split()                  # Split by whitespace
+s.split(',')               # Split by delimiter
+s.replace('l', 'L')        # Replace characters
+s.find('ll')               # Find substring (returns -1 if not found)
+s.startswith('he')         # True
+s.endswith('lo')           # True
+s.isalpha()                # Check if alphabetic
+s.isdigit()                # Check if digit
+''.join(list)              # Join list into string</code></pre>
+
+        <h3>String Operations</h3>
+        <pre><code>len(s)                     # Length
+ord('a')                   # ASCII value (97)
+chr(97)                    # Character from ASCII ('a')
+s[start:end]               # Slicing</code></pre>
+
+        <h2 id="sets">4. Sets</h2>
+        
+        <h3>Creation & Operations</h3>
+        <pre><code>s = set()                  # Empty set
+s = {1, 2, 3}              # Initialized set
+s.add(x)                   # Add element - O(1)
+s.remove(x)                # Remove - O(1)
+s.discard(x)               # Remove (no error) - O(1)
+x in s                     # Check membership - O(1)</code></pre>
+
+        <h3>Set Operations</h3>
+        <pre><code>s1 | s2                    # Union
+s1 & s2                    # Intersection
+s1 - s2                    # Difference
+s1 ^ s2                    # Symmetric difference</code></pre>
+
+        <h2 id="dicts">5. Dictionaries (Hash Maps)</h2>
+        
+        <pre><code>d = {}                     # Empty dict
+d = {'a': 1, 'b': 2}       # Initialized dict
+d[key] = value             # Add/update - O(1)
+d.get(key, default)        # Get with default - O(1)
+d.pop(key, default)        # Remove and return - O(1)
+key in d                   # Check existence - O(1)
+d.keys()                   # All keys
+d.values()                 # All values
+d.items()                  # All (key, value) pairs
+
+# Iteration
+for key in d:
+for value in d.values():
+for key, value in d.items():</code></pre>
+
+        <h2 id="deque">6. Deque (Double-ended Queue)</h2>
+        
+        <pre><code>from collections import deque
+
+dq = deque()               # Empty deque
+dq.append(x)               # Add to right - O(1)
+dq.appendleft(x)           # Add to left - O(1)
+dq.pop()                   # Remove from right - O(1)
+dq.popleft()               # Remove from left - O(1)
+dq.rotate(n)               # Rotate n steps right</code></pre>
+
+        <div class="note">
+            <strong>Use Cases:</strong> Queue, stack, sliding window problems
+        </div>
+
+        <h2 id="heap">7. Heap (Priority Queue)</h2>
+        
+        <pre><code>import heapq
+
+heap = []                  # Min heap by default
+heapq.heappush(heap, x)    # Add element - O(log n)
+heapq.heappop(heap)        # Remove min - O(log n)
+heap[0]                    # Peek min - O(1)
+heapq.heapify(list)        # Convert list to heap - O(n)
+
+# N largest/smallest
+heapq.nlargest(n, iterable)
+heapq.nsmallest(n, iterable)
+
+# Max heap trick
+heapq.heappush(heap, -x)   # Negate values
+max_val = -heapq.heappop(heap)</code></pre>
+
+        <h2 id="counter">8. Counter</h2>
+        
+        <pre><code>from collections import Counter
+
+cnt = Counter([1, 1, 2, 3, 3, 3])
+cnt['x']                   # Count of x (returns 0 if not exists)
+cnt.most_common(n)         # n most common elements
+cnt.update([4, 4])         # Add counts
+
+# Counter operations
+cnt1 + cnt2                # Add counters
+cnt1 - cnt2                # Subtract
+cnt1 & cnt2                # Intersection (min)
+cnt1 | cnt2                # Union (max)</code></pre>
+
+        <h2 id="defaultdict">9. DefaultDict</h2>
+        
+        <pre><code>from collections import defaultdict
+
+dd = defaultdict(int)      # Default value 0
+dd = defaultdict(list)     # Default value []
+dd = defaultdict(set)      # Default value set()
+dd[key]                    # Auto-creates if not exists</code></pre>
+
+        <h2 id="stack">10. Stack Operations</h2>
+        
+        <pre><code># Use list as stack
+stack = []
+stack.append(x)            # Push - O(1)
+stack.pop()                # Pop - O(1)
+stack[-1]                  # Peek - O(1)
+not stack                  # Check if empty</code></pre>
+
+        <h2 id="queue">11. Queue Operations</h2>
+        
+        <pre><code>from collections import deque
+
+queue = deque()
+queue.append(x)            # Enqueue - O(1)
+queue.popleft()            # Dequeue - O(1)
+queue[0]                   # Front - O(1)</code></pre>
+
+        <h2 id="sorting">13. Sorting</h2>
+        
+        <pre><code>arr.sort()                 # In-place
+sorted_arr = sorted(arr)   # Returns new list
+
+# Sort with key
+arr.sort(key=lambda x: x[1])
+arr.sort(key=lambda x: (x[0], -x[1]))  # Multiple criteria
+arr.sort(reverse=True)     # Descending
+
+# Custom comparator
+from functools import cmp_to_key
+arr.sort(key=cmp_to_key(lambda x, y: x - y))</code></pre>
+
+        <h2 id="binarysearch">14. Binary Search</h2>
+        
+        <pre><code>import bisect
+
+bisect.bisect_left(arr, x)    # Leftmost insertion point
+bisect.bisect_right(arr, x)   # Rightmost insertion point
+bisect.insort(arr, x)         # Insert maintaining order
+
+# Manual implementation
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1</code></pre>
+
+        <h2 id="itertools">15. Itertools</h2>
+        
+        <pre><code>from itertools import *
+
+# Combinations & Permutations
+combinations([1,2,3], 2)      # [(1,2), (1,3), (2,3)]
+permutations([1,2,3], 2)      # All permutations
+product([1,2], [3,4])         # Cartesian product
+
+# Useful iterators
+accumulate([1,2,3,4])         # [1, 3, 6, 10] (cumulative sum)
+chain([1,2], [3,4])           # [1, 2, 3, 4]
+count(start, step)            # Infinite counter
+cycle([1,2,3])                # Cycle infinitely</code></pre>
+
+        <h2 id="math">16. Math & Number Operations</h2>
+        
+        <pre><code>import math
+
+abs(x)                     # Absolute value
+pow(x, y)                  # x^y
+x // y                     # Floor division
+x % y                      # Modulo
+divmod(x, y)               # (quotient, remainder)
+
+math.floor(x)
+math.ceil(x)
+math.sqrt(x)
+math.gcd(a, b)
+math.factorial(n)
+math.log(x, base)
+math.inf                   # Infinity
+-math.inf                  # Negative infinity</code></pre>
+
+        <h2 id="builtins">17. Common Built-in Functions</h2>
+        
+        <pre><code>sum(arr)                   # Sum of elements
+len(arr)                   # Length
+min(arr)
+max(arr)
+all(arr)                   # True if all truthy
+any(arr)                   # True if any truthy
+
+map(func, arr)             # Apply function
+filter(func, arr)          # Filter elements
+zip(arr1, arr2)            # Zip iterables
+enumerate(arr)             # (index, value) pairs
+reversed(arr)              # Reverse iterator
+
+range(n)                   # 0 to n-1
+range(start, end)          # start to end-1
+range(start, end, step)    # With step</code></pre>
+
+        <h2 id="twopointers">18. Two Pointers Pattern</h2>
+        
+        <h3>Opposite Direction</h3>
+        <pre><code>left, right = 0, len(arr) - 1
+while left < right:
+    if condition:
+        left += 1
+    else:
+        right -= 1</code></pre>
+
+        <h3>Same Direction (Fast & Slow)</h3>
+        <pre><code>slow = fast = 0
+while fast < len(arr):
+    if condition:
+        slow += 1
+    fast += 1</code></pre>
+
+        <h2 id="slidingwindow">19. Sliding Window Pattern</h2>
+        
+        <h3>Fixed Size Window</h3>
+        <pre><code>window_sum = sum(arr[:k])
+max_sum = window_sum
+for i in range(k, len(arr)):
+    window_sum += arr[i] - arr[i-k]
+    max_sum = max(max_sum, window_sum)</code></pre>
+
+        <h3>Variable Size Window</h3>
+        <pre><code>left = 0
+for right in range(len(arr)):
+    # Add arr[right] to window
+    while condition_violated:
+        # Remove arr[left] from window
+        left += 1
+    # Update result</code></pre>
+
+        <h2 id="snippets">20. Useful Code Snippets</h2>
+        
+        <h3>Matrix Traversal</h3>
+        <pre><code># 4 directions (up, right, down, left)
+directions = [(0,1), (1,0), (0,-1), (-1,0)]
+for dx, dy in directions:
+    nx, ny = x + dx, y + dy
+
+# 8 directions (including diagonals)
+directions = [(0,1), (1,0), (0,-1), (-1,0), 
+              (1,1), (1,-1), (-1,1), (-1,-1)]</code></pre>
+
+        <h3>Binary Representation</h3>
+        <pre><code>bin(x)                     # '0b1010'
+bin(x)[2:]                 # '1010'
+x.bit_count()              # Count set bits (Python 3.10+)
+x & 1                      # Check if odd
+x >> 1                     # Divide by 2
+x << 1                     # Multiply by 2
+x & (x-1)                  # Remove rightmost set bit</code></pre>
+
+        <h3>DFS Template</h3>
+        <pre><code>def dfs(node, visited):
+    if node in visited:
+        return
+    visited.add(node)
+    for neighbor in graph[node]:
+        dfs(neighbor, visited)</code></pre>
+
+        <h3>BFS Template</h3>
+        <pre><code>from collections import deque
+
+def bfs(start):
+    queue = deque([start])
+    visited = {start}
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)</code></pre>
+
+        <h2 id="complexity">21. Time Complexity Quick Reference</h2>
+        
+        <div class="complexity">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Structure</th>
+                        <th>Access</th>
+                        <th>Search</th>
+                        <th>Insert</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>List</strong></td>
+                        <td>O(1)</td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                        <td>O(n)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>List (end)</strong></td>
+                        <td>O(1)</td>
+                        <td>-</td>
+                        <td>O(1)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Set</strong></td>
+                        <td>-</td>
+                        <td>O(1)*</td>
+                        <td>O(1)*</td>
+                        <td>O(1)*</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dict</strong></td>
+                        <td>O(1)*</td>
+                        <td>O(1)*</td>
+                        <td>O(1)*</td>
+                        <td>O(1)*</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deque (both ends)</strong></td>
+                        <td>O(1)</td>
+                        <td>-</td>
+                        <td>O(1)</td>
+                        <td>O(1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heap</strong></td>
+                        <td>O(1) peek</td>
+                        <td>O(n)</td>
+                        <td>O(log n)</td>
+                        <td>O(log n)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; color: var(--text-secondary);">* Average case; worst case O(n) for hash collisions</p>
+        </div>
+
+        <h3>Common Algorithm Complexities</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Time Complexity</th>
+                    <th>Space Complexity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Binary Search</strong></td>
+                    <td>O(log n)</td>
+                    <td>O(1)</td>
+                </tr>
+                <tr>
+                    <td><strong>Merge Sort</strong></td>
+                    <td>O(n log n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr>
+                    <td><strong>Quick Sort</strong></td>
+                    <td>O(n log n) avg</td>
+                    <td>O(log n)</td>
+                </tr>
+                <tr>
+                    <td><strong>DFS/BFS</strong></td>
+                    <td>O(V + E)</td>
+                    <td>O(V)</td>
+                </tr>
+                <tr>
+                    <td><strong>Dijkstra</strong></td>
+                    <td>O((V + E) log V)</td>
+                    <td>O(V)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <div style="text-align: center; margin-top: 40px; color: var(--text-secondary);">
+            <p>⭐ <strong>Star this repository if you find it helpful!</strong></p>
+            <p style="margin-top: 10px;">Last Updated: October 2025</p>
+        </div>
+    </div>
+
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</div>
+
+    <script>
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
